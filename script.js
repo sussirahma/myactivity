@@ -1,4 +1,23 @@
-let todos = [];
+const storageKey = 'myactivity-todos';
+
+function loadTodos() {
+  try {
+    const savedTodos = localStorage.getItem(storageKey);
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveTodos() {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(todos));
+  } catch (error) {
+    showNotification('Aktivitas tidak dapat disimpan di browser.');
+  }
+}
+
+let todos = loadTodos();
 
 let currentFilter = 'all';
 
@@ -93,6 +112,7 @@ todoForm.addEventListener('submit', event => {
   }
 
   todos.unshift({ id: generateId(), text, completed: false });
+  saveTodos();
   todoInput.value = '';
   hideNotification();
   render();
@@ -100,16 +120,19 @@ todoForm.addEventListener('submit', event => {
 
 function toggleTask(id) {
   todos = todos.map(task => task.id === id ? { ...task, completed: !task.completed } : task);
+  saveTodos();
   render();
 }
 
 function deleteTask(id) {
   todos = todos.filter(task => task.id !== id);
+  saveTodos();
   render();
 }
 
 function clearCompleted() {
   todos = todos.filter(task => !task.completed);
+  saveTodos();
   render();
 }
 
