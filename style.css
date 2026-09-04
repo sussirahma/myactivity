@@ -10,12 +10,20 @@
 }
 
 body.bg-slate-100 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   color: var(--soft-ink);
   background-color: #eaf3f2;
   background-image:
-    radial-gradient(circle at 8% 12%, rgba(223, 244, 238, 0.95) 0, rgba(223, 244, 238, 0) 34%),
-    radial-gradient(circle at 92% 18%, rgba(249, 229, 216, 0.88) 0, rgba(249, 229, 216, 0) 30%),
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(223, 244, 238, 0.95) 0,
+      rgba(223, 244, 238, 0) 34%
+    ),
+    radial-gradient(
+      circle at 92% 18%,
+      rgba(249, 229, 216, 0.88) 0,
+      rgba(249, 229, 216, 0) 30%
+    ),
     linear-gradient(135deg, #eaf3f2 0%, #edf3fa 52%, #f8f0eb 100%);
 }
 
@@ -62,7 +70,8 @@ body.bg-slate-100 {
 }
 
 @keyframes character-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(-4deg);
   }
   50% {

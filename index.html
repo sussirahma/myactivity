@@ -1,112 +1,188 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyActivity</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col items-center p-4 sm:p-8">
-
-  <div class="cute-background" aria-hidden="true">
-    <span class="cute-character character-bear">🐻</span>
-    <span class="cute-character character-bunny">🐰</span>
-    <span class="cute-character character-frog">🐸</span>
-    <span class="cute-character character-flower">🌼</span>
-  </div>
-
-  <!-- Container Utama -->
-  <main class="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200/80 overflow-hidden flex flex-col my-auto">
-    
-    <!-- Header Aplikasi -->
-    <header class="bg-indigo-600 px-6 py-6 text-white text-center">
-      <h1 class="text-white text-2xl font-bold tracking-tight">Apa yang kamu lakukan hari ini?</h1>
-      <p class="text-indigo-100 text-sm mt-1">Kelola target harian dengan mudah dan rapi</p>
-    </header>
-
-    <!-- Konten & Kontrol -->
-    <div class="p-6 space-y-5">
-
-      <!-- Form Input Tugas -->
-      <form id="todo-form" class="flex items-center gap-2">
-        <input 
-          type="text" 
-          id="todo-input" 
-          placeholder="Tuliskan rencana baru..." 
-          class="flex-1 px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all placeholder:text-slate-400"
-          autocomplete="off"
-        />
-        <button 
-          type="submit" 
-          class="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium text-sm rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0"
-        >
-          <!-- SVG Icon Plus -->
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-          </svg>
-          <span>Tambah</span>
-        </button>
-      </form>
-
-      <!-- Panel Filter & Statistik Sederhana -->
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
-        <!-- Tombol Filter -->
-        <div class="flex gap-1 bg-slate-100 p-1 rounded-lg text-xs font-medium text-slate-600">
-          <button id="filter-all" class="filter-btn px-3 py-1.5 rounded-md bg-white text-indigo-600 shadow-sm transition-all">Semua</button>
-          <button id="filter-active" class="filter-btn px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-800 transition-all">Belum Selesai</button>
-          <button id="filter-completed" class="filter-btn px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-800 transition-all">Selesai</button>
-        </div>
-
-        <!-- Counter Status -->
-        <span id="task-counter" class="text-xs text-slate-500 font-medium">0 aktifitas tersisa</span>
-      </div>
-
-      <!-- Daftar Tugas (List) -->
-      <div class="max-h-[380px] overflow-y-auto custom-scroll pr-1">
-        <ul id="todo-list" class="space-y-2.5">
-          <!-- Item tugas akan disuntikkan secara dinamis melalui JavaScript -->
-        </ul>
-
-        <!-- State Kosong (Empty State) -->
-        <div id="empty-state" class="hidden text-center py-10">
-          <div class="inline-flex items-center justify-center w-14 h-14 bg-indigo-50 text-indigo-400 rounded-full mb-3">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-          </div>
-          <p class="text-sm font-medium text-slate-600">Belum ada aktifitas di kategori ini</p>
-          <p class="text-xs text-slate-400 mt-0.5">Tambahkan rencana baru untuk memulai</p>
-        </div>
-      </div>
-
-      <!-- Notifikasi Alert Custom (Pengganti alert bawaan) -->
-      <div id="notification-box" class="hidden transform transition-all duration-300 p-3 rounded-lg text-xs bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-between">
-        <span id="notification-text">Teks pesan peringatan</span>
-        <button type="button" id="hide-notification" class="text-amber-600 hover:text-amber-900 ml-2 font-bold">&times;</button>
-      </div>
-
-      <!-- Tombol Aksi Massal -->
-      <div id="bulk-actions" class="hidden pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-        <button 
-          id="clear-completed" 
-          class="text-slate-500 hover:text-red-600 transition-colors flex items-center gap-1 font-medium"
-        >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-          </svg>
-          Hapus yang Selesai
-        </button>
-      </div>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyActivity</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body
+    class="bg-slate-100 min-h-screen text-slate-800 flex flex-col items-center p-4 sm:p-8"
+  >
+    <div class="cute-background" aria-hidden="true">
+      <span class="cute-character character-bear">🐻</span>
+      <span class="cute-character character-bunny">🐰</span>
+      <span class="cute-character character-frog">🐸</span>
+      <span class="cute-character character-flower">🌼</span>
     </div>
-  </main>
 
-  <script src="script.js" defer></script>
-</body>
+    <!-- Container Utama -->
+    <main
+      class="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200/80 overflow-hidden flex flex-col my-auto"
+    >
+      <!-- Header Aplikasi -->
+      <header class="bg-indigo-600 px-6 py-6 text-white text-center">
+        <h1 class="text-white text-2xl font-bold tracking-tight">
+          Apa yang kamu lakukan hari ini?
+        </h1>
+        <p class="text-indigo-100 text-sm mt-1">
+          Kelola target harian dengan mudah dan rapi
+        </p>
+      </header>
+
+      <!-- Konten & Kontrol -->
+      <div class="p-6 space-y-5">
+        <!-- Form Input Tugas -->
+        <form id="todo-form" class="flex items-center gap-2">
+          <input
+            type="text"
+            id="todo-input"
+            placeholder="Tuliskan rencana baru..."
+            class="flex-1 px-4 py-3 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all placeholder:text-slate-400"
+            autocomplete="off"
+          />
+          <button
+            type="submit"
+            class="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium text-sm rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0"
+          >
+            <!-- SVG Icon Plus -->
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              ></path>
+            </svg>
+            <span>Tambah</span>
+          </button>
+        </form>
+
+        <!-- Panel Filter & Statistik Sederhana -->
+        <div
+          class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3"
+        >
+          <!-- Tombol Filter -->
+          <div
+            class="flex gap-1 bg-slate-100 p-1 rounded-lg text-xs font-medium text-slate-600"
+          >
+            <button
+              id="filter-all"
+              class="filter-btn px-3 py-1.5 rounded-md bg-white text-indigo-600 shadow-sm transition-all"
+            >
+              Semua
+            </button>
+            <button
+              id="filter-active"
+              class="filter-btn px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-800 transition-all"
+            >
+              Belum Selesai
+            </button>
+            <button
+              id="filter-completed"
+              class="filter-btn px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-800 transition-all"
+            >
+              Selesai
+            </button>
+          </div>
+
+          <!-- Counter Status -->
+          <span id="task-counter" class="text-xs text-slate-500 font-medium"
+            >0 aktifitas tersisa</span
+          >
+        </div>
+
+        <!-- Daftar Tugas (List) -->
+        <div class="max-h-[380px] overflow-y-auto custom-scroll pr-1">
+          <ul id="todo-list" class="space-y-2.5">
+            <!-- Item tugas akan disuntikkan secara dinamis melalui JavaScript -->
+          </ul>
+
+          <!-- State Kosong (Empty State) -->
+          <div id="empty-state" class="hidden text-center py-10">
+            <div
+              class="inline-flex items-center justify-center w-14 h-14 bg-indigo-50 text-indigo-400 rounded-full mb-3"
+            >
+              <svg
+                class="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-slate-600">
+              Belum ada aktifitas di kategori ini
+            </p>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Tambahkan rencana baru untuk memulai
+            </p>
+          </div>
+        </div>
+
+        <!-- Notifikasi Alert Custom (Pengganti alert bawaan) -->
+        <div
+          id="notification-box"
+          class="hidden transform transition-all duration-300 p-3 rounded-lg text-xs bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-between"
+        >
+          <span id="notification-text">Teks pesan peringatan</span>
+          <button
+            type="button"
+            id="hide-notification"
+            class="text-amber-600 hover:text-amber-900 ml-2 font-bold"
+          >
+            &times;
+          </button>
+        </div>
+
+        <!-- Tombol Aksi Massal -->
+        <div
+          id="bulk-actions"
+          class="hidden pt-2 border-t border-slate-100 flex items-center justify-between text-xs"
+        >
+          <button
+            id="clear-completed"
+            class="text-slate-500 hover:text-red-600 transition-colors flex items-center gap-1 font-medium"
+          >
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              ></path>
+            </svg>
+            Hapus yang Selesai
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js" defer></script>
+  </body>
 </html>
