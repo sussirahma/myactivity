@@ -1,4 +1,5 @@
 let todos = [];
+
 let currentFilter = 'all';
 
 const todoForm = document.getElementById('todo-form');
