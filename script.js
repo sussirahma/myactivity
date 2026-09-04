@@ -97,6 +97,7 @@ function render() {
   });
 
   taskCounter.textContent = `${todos.filter(todo => !todo.completed).length} aktifitas belum selesai`;
+  taskCounter.classList.toggle('hidden', currentFilter === 'completed');
   const showBulkActions = currentFilter !== 'active' && todos.some(todo => todo.completed);
   bulkActions.classList.toggle('hidden', !showBulkActions);
   updateFilterButtons();
