@@ -1,9 +1,3 @@
-let todos = [
-  { id: '1', text: 'Mempelajari dasar JavaScript', completed: true },
-  { id: '2', text: 'Membuat aplikasi To-Do List sederhana', completed: false },
-  { id: '3', text: 'Melakukan olahraga sore 30 menit', completed: false }
-];
-
 let currentFilter = 'all';
 
 const todoForm = document.getElementById('todo-form');
