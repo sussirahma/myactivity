@@ -1,4 +1,27 @@
+<<<<<<< HEAD
 const storageKey = "myactivity-todos";
+=======
+const storageKey = 'myactivity-todos';
+
+function loadTodos() {
+  try {
+    const savedTodos = localStorage.getItem(storageKey);
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveTodos() {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(todos));
+  } catch (error) {
+    showNotification('Aktivitas tidak dapat disimpan di browser.');
+  }
+}
+
+let todos = loadTodos();
+>>>>>>> 143bcdf8e94100e1029bd7b4de8bb10cb5a95e21
 
 function loadTodos() {
   try {
@@ -121,11 +144,18 @@ function render() {
     todoList.appendChild(li);
   });
 
+<<<<<<< HEAD
   taskCounter.textContent = `${todos.filter((todo) => !todo.completed).length} aktifitas belum selesai`;
   taskCounter.classList.toggle("hidden", currentFilter === "completed");
   const showBulkActions =
     currentFilter !== "active" && todos.some((todo) => todo.completed);
   bulkActions.classList.toggle("hidden", !showBulkActions);
+=======
+  taskCounter.textContent = `${todos.filter(todo => !todo.completed).length} aktifitas belum selesai`;
+  taskCounter.classList.toggle('hidden', currentFilter === 'completed');
+  const showBulkActions = currentFilter !== 'active' && todos.some(todo => todo.completed);
+  bulkActions.classList.toggle('hidden', !showBulkActions);
+>>>>>>> 143bcdf8e94100e1029bd7b4de8bb10cb5a95e21
   updateFilterButtons();
 }
 
@@ -140,21 +170,33 @@ todoForm.addEventListener("submit", (event) => {
 
   todos.unshift({ id: generateId(), text, completed: false });
   saveTodos();
+<<<<<<< HEAD
   todoInput.value = "";
+=======
+  todoInput.value = '';
+>>>>>>> 143bcdf8e94100e1029bd7b4de8bb10cb5a95e21
   hideNotification();
   render();
 });
 
 function toggleTask(id) {
+<<<<<<< HEAD
   todos = todos.map((task) =>
     task.id === id ? { ...task, completed: !task.completed } : task,
   );
+=======
+  todos = todos.map(task => task.id === id ? { ...task, completed: !task.completed } : task);
+>>>>>>> 143bcdf8e94100e1029bd7b4de8bb10cb5a95e21
   saveTodos();
   render();
 }
 
 function deleteTask(id) {
+<<<<<<< HEAD
   todos = todos.filter((task) => task.id !== id);
+=======
+  todos = todos.filter(task => task.id !== id);
+>>>>>>> 143bcdf8e94100e1029bd7b4de8bb10cb5a95e21
   saveTodos();
   render();
 }
@@ -204,7 +246,11 @@ function saveEditedTask(event) {
 }
 
 function clearCompleted() {
+<<<<<<< HEAD
   todos = todos.filter((task) => !task.completed);
+=======
+  todos = todos.filter(task => !task.completed);
+>>>>>>> 143bcdf8e94100e1029bd7b4de8bb10cb5a95e21
   saveTodos();
   render();
 }
