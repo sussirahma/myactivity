@@ -144,6 +144,69 @@ div.bg-slate-100 {
   border-radius: 9999px;
 }
 
+#edit-modal-backdrop {
+  background-color: rgba(43, 76, 72, 0.28);
+  backdrop-filter: blur(3px);
+}
+
+.edit-modal-panel {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(149, 196, 187, 0.55);
+  box-shadow: 0 24px 60px rgba(55, 105, 97, 0.2);
+  animation: edit-modal-in 180ms ease-out;
+}
+
+.edit-modal-close {
+  color: #78a79f;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.edit-modal-close:hover {
+  color: #32766f;
+  background-color: #e4f4f0;
+}
+
+.edit-modal-input {
+  border: 1px solid #cbdedb;
+  background-color: #fbfefd;
+  color: #334155;
+}
+
+.edit-modal-input:focus {
+  border-color: #5f9fa0;
+  box-shadow: 0 0 0 3px rgba(95, 159, 160, 0.18);
+}
+
+.edit-modal-cancel {
+  color: #5f817b;
+  background-color: #edf7f4;
+}
+
+.edit-modal-cancel:hover {
+  background-color: #dff1ec;
+}
+
+.edit-modal-save {
+  background-color: var(--soft-teal);
+  box-shadow: 0 5px 12px rgba(63, 143, 134, 0.2);
+}
+
+.edit-modal-save:hover {
+  background-color: var(--soft-teal-dark);
+}
+
+@keyframes edit-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (max-width: 640px) {
   body.bg-slate-100 {
     padding: 0.75rem;

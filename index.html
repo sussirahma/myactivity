@@ -155,6 +155,65 @@
           </button>
         </div>
 
+        <!-- Modal Edit Aktivitas -->
+        <div
+          id="edit-modal"
+          class="hidden fixed inset-0 z-50 items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="edit-modal-title"
+        >
+          <div id="edit-modal-backdrop" class="absolute inset-0"></div>
+          <div
+            class="edit-modal-panel relative w-full max-w-sm p-5 rounded-2xl"
+          >
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <h2
+                  id="edit-modal-title"
+                  class="text-base font-semibold text-slate-700"
+                >
+                  Edit aktivitas
+                </h2>
+                <p class="text-xs text-slate-500 mt-1">
+                  Perbarui rencana kamu.
+                </p>
+              </div>
+              <button
+                type="button"
+                id="close-edit-modal"
+                class="edit-modal-close p-1 rounded-lg transition-colors"
+                aria-label="Tutup edit aktivitas"
+              >
+                &times;
+              </button>
+            </div>
+            <form id="edit-form" class="space-y-3">
+              <input
+                type="text"
+                id="edit-input"
+                class="edit-modal-input w-full px-4 py-3 rounded-xl text-sm focus:outline-none"
+                autocomplete="off"
+              />
+              <div class="flex justify-end gap-2">
+                <button
+                  type="button"
+                  id="cancel-edit"
+                  class="edit-modal-cancel px-4 py-2.5 rounded-xl text-sm font-medium transition-colors"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  class="edit-modal-save px-4 py-2.5 rounded-xl text-sm font-medium text-white transition-colors"
+                >
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
         <!-- Tombol Aksi Massal -->
         <div
           id="bulk-actions"
